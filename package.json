@@ -6,7 +6,7 @@
     "url": "https://github.com/EscFrog/wetube"
   },
   "scripts": {
-    "go": "node index.js"
+    "compile": "babel-node index.js"
   },
   "author": "EscFrog",
   "license": "MIT",
@@ -15,6 +15,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.21.8",
+    "@babel/node": "^7.20.7",
     "@babel/preset-env": "^7.21.5"
   }
 }
