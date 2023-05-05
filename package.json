@@ -6,7 +6,7 @@
     "url": "https://github.com/EscFrog/wetube"
   },
   "scripts": {
-    "comp": "nodemon --exec babel-node index.js"
+    "server": "nodemon --exec babel-node src/server.js"
   },
   "author": "EscFrog",
   "license": "MIT",
