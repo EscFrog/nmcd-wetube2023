@@ -10,28 +10,13 @@ const logger = (req, res, next) => {
     next(); // 미들웨어 함수에서 다음 함수로 넘어갈 때 쓰는 함수.
 }
 
-const privateMW = (req, res, next) => {
-    const url = req.url;
-    if(url === "/protected"){
-        return res.send("<h1>Not Allowed</h1>");
-    }
-    console.log("It's ok, you can pass through");
-    next();
-}
-
 const handleHome = (req, res) => {
     return res.send("Route Finish!!!");
 };
 
-const handleProtected = (req, res) => {
-    return res.send("Welcome to the private lounge.");
-}
-
-app.use(logger);
-app.use(privateMW);
 // get 메소드는 콜백 함수를 필요로한다. 매개 변수는 두 개가 필요한데, 각각 request, respons object를 받는다.
-app.get("/", handleHome);
-app.get("/protected", handleProtected); // ~/protected 라는 주소로 가려고 하면, 원래는 이 부분이 실행되어 "Welcome to the private lounge." 라는 메시지가 나와야 하지만, 위에서 privateMW 미들웨어가 막아버려서 올 수 없다.
+app.get("/", logger, handleHome);
+
 
 const handleListening = () => console.log(`Server listening on port http://localhost:${PORT} 🚀`)
 
