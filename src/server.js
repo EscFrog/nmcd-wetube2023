@@ -10,9 +10,7 @@ const logger = (req, res, next) => {
     next(); // 미들웨어 함수에서 다음 함수로 넘어갈 때 쓰는 함수.
 }
 
-const handleHome = (req, res) => {
-    return res.send("Route Finish!!!");
-};
+const handleHome = (req, res) => res.send("Route Finish!!!");
 
 // get 메소드는 콜백 함수를 필요로한다. 매개 변수는 두 개가 필요한데, 각각 request, respons object를 받는다.
 app.get("/", logger, handleHome);
