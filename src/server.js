@@ -17,5 +17,5 @@ app.use("/videos", videoRouter);
 app.use("/users", userRouter);
 
 
-const handleListening = () => console.log(`Server listening on port http://localhost:${PORT} 🚀`)
+const handleListening = () => console.log(`✅ Server listening on port http://localhost:${PORT} 🚀`)
 app.listen(PORT, handleListening);  // express를 시작하고 본격적으로 대기 상대로 만든다.
