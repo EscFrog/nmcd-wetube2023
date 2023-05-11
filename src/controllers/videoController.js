@@ -1,6 +1,4 @@
-export const trending = (req, res) => res.send(
-    "<!DOCTYPE html><html lang='ko'><head><title>Wetube</title></head><body><h1>Home</h1><footer>&copy; 2021 Wetube</footer></body>"
-)
+export const trending = (req, res) => res.render("home");
 export const search = (req, res) => res.send("Search");
 
 export const upload = (req, res) => res.send("Upload Video");

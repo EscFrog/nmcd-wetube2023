@@ -8,8 +8,12 @@ import videoRouter from "./routers/videoRouter";
 
 const PORT = 4000;
 
+console.log(process.cwd());
+
 const app = express();
 const logger = morgan("dev");
+
+app.set("view engine", "pug");  // express에게 view engine을 퍼그로 쓸 거라고 알려준다.
 app.use(logger);
 
 app.use("/", globalRouter);
