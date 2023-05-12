@@ -14,6 +14,8 @@ const app = express();
 const logger = morgan("dev");
 
 app.set("view engine", "pug");  // express에게 view engine을 퍼그로 쓸 거라고 알려준다.
+app.set("views", process.cwd() + "/src/views");
+
 app.use(logger);
 
 app.use("/", globalRouter);
