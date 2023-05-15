@@ -1,9 +1,3 @@
-const sampleUser = {
-    username: "escfrog",
-    loggedIn: true,
-};
-
-
 export const trending = (req, res) => res.render("home", { pageTitle : "Home", sampleUser});
 export const search = (req, res) => res.send("Search");
 
