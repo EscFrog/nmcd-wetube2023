@@ -1,6 +1,5 @@
 export const trending = (req, res) => {
-    // const videos = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    const videos = [];
+    const videos = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     return res.render("home", { pageTitle : "Home", videos})
 };
 export const search = (req, res) => res.send("Search");
