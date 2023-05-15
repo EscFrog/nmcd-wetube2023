@@ -1,4 +1,10 @@
-export const trending = (req, res) => res.render("home", { pageTitle : "Home"});
+const sampleUser = {
+    username: "escfrog",
+    loggedIn: true,
+};
+
+
+export const trending = (req, res) => res.render("home", { pageTitle : "Home", sampleUser});
 export const search = (req, res) => res.send("Search");
 
 export const upload = (req, res) => res.send("Upload Video");
