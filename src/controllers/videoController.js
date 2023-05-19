@@ -29,18 +29,20 @@ export const trending = (req, res) => {
     return res.render("home", { pageTitle : "Home", videos})
 };
 
-export const search = (req, res) => res.send("Search");
-
-export const upload = (req, res) => res.send("Upload Video");
-
 export const watch = (req, res) => {
     const {id} = req.params;
     // 위 코드는 ES6 문법으로서 아래 코드와 같다.
     // const id = req.params.id;
     const video = videos[id];
-    return res.render("watch", {pageTitle : `Watching ${video.title}`, video})
+    return res.render("watch", {pageTitle : `Watching: ${video.title}`, video});
 };
 
-export const edit = (req, res) => res.render("edit", {pageTitle : "Edit"});
+export const getEdit = (req, res) => {
+    const {id} = req.params;
+    const video = videos[id];
+    return res.render("edit", {pageTitle : `Editing: ${video.title}`, video});
+};
 
-export const deleteVideo = (req, res) => res.send("Delete Video");
+export const postEdit = (req, res) => {
+    return res.send("Nice!");
+};
