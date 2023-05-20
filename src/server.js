@@ -17,7 +17,7 @@ app.set("view engine", "pug");  // express에게 view engine을 퍼그로 쓸 �
 app.set("views", process.cwd() + "/src/views");
 
 app.use(logger);
-app.use(express.urlencoded({ extended: true}));
+app.use(express.urlencoded({ extended: true})); // 순서가 중요하다. 비디오 라우터로 가기 전에 이 미들웨어에서 form의 데이터를 인코드한다.
 
 app.use("/", globalRouter);
 app.use("/videos", videoRouter);
