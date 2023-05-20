@@ -44,5 +44,8 @@ export const getEdit = (req, res) => {
 };
 
 export const postEdit = (req, res) => {
-    return res.send("Nice!");
+    const { id } = req.params;
+    const { title } = req.body;
+    videos[id].title = title;
+    return res.redirect(`/videos/${id}`);
 };

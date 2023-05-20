@@ -17,6 +17,7 @@ app.set("view engine", "pug");  // express에게 view engine을 퍼그로 쓸 �
 app.set("views", process.cwd() + "/src/views");
 
 app.use(logger);
+app.use(express.urlencoded({ extended: true}));
 
 app.use("/", globalRouter);
 app.use("/videos", videoRouter);
