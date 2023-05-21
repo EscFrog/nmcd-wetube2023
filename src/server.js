@@ -1,3 +1,4 @@
+import "./db";  // 파일을 임포트하면 즉시 실행된다.
 import express from "express";  // express를 가져오는 최신 문법. 이 코드를 babel이 아래 코드로 변환해준다.
 //const express = require("express");
 import morgan from "morgan";
@@ -24,5 +25,5 @@ app.use("/videos", videoRouter);
 app.use("/users", userRouter);
 
 
-const handleListening = () => console.log(`✅ Server listening on port http://localhost:${PORT} 🚀`)
+const handleListening = () => console.log(`✅ Server listening on http://localhost:${PORT} 🚀`)
 app.listen(PORT, handleListening);  // express를 시작하고 본격적으로 대기 상대로 만든다.
