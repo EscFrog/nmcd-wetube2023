@@ -1,4 +1,5 @@
 import "./db";  // 파일을 임포트하면 즉시 실행된다.
+import "./models/Video";
 import express from "express";  // express를 가져오는 최신 문법. 이 코드를 babel이 아래 코드로 변환해준다.
 //const express = require("express");
 import morgan from "morgan";
