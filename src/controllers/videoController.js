@@ -4,22 +4,13 @@ import Video from "../models/Video";
 // 이제 몽구스는 callback 패턴을 사용하지 않고 await async 패턴만 사용하지만
 // 만약 callback 패턴을 사용할 수 있었다면 다음과 같이 코드를 짤 수 있다.
 Video.find({}, (error, videos) => {
-    if (error) {
-        return res.render("server-error");
-    }
     return res.render("home", { pageTitle: "Home", videos });
 });
 */
 
-
 export const home = async(req, res) => {
-    try {
-        const videos = await Video.find({});
+        const videos = await Video.find({});    // await 키워드는 반드시 async 함수 안에서만 사용해야 한다.
         return res.render("home", { pageTitle : "Home", videos })
-    } catch {
-        return res.rander("server-error")
-    }
-    
 };
 
 export const watch = (req, res) => {
