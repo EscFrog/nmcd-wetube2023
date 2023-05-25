@@ -10,7 +10,7 @@ Video.find({}, (error, videos) => {
 
 export const home = async(req, res) => {
         const videos = await Video.find({});    // await 키워드는 반드시 async 함수 안에서만 사용해야 한다.
-        return res.render("home", { pageTitle : "Home", videos })
+        return res.render("home", { pageTitle : "Home", videos });
 };
 
 export const watch = (req, res) => {
@@ -34,6 +34,17 @@ export const getUpload = (req, res) => {
 };
 
 export const postUpload = (req, res) => {
-    const {title} = req.body;
+    const {videoTitle, description, hashtags} = req.body;
+    const video = new Video({
+        title: videoTitle,
+        description,
+        createdAt: Date.now(),
+        hashtags: hashtags.replace(/\s/g, "").split(",").map((word) => `#${word}`), // hashtags 값에서, 공백을 제거하고, ","를 기준으로 분할한 후, "#"문자를 붙여 배열로 반환한다.
+        meta: {
+            views: 0,
+            rating: 0,
+        }
+    });
+    console.log(video);
     return res.redirect("/");
 }
