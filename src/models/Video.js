@@ -4,7 +4,7 @@ const videoSchema = new mongoose.Schema({
     title: String,
     // 위 코드는 축약형. 원래는 title: { type: String },
     description: String,
-    createdAt: Date,
+    createdAt: { type: Date, required: true},
     hashtags: [{ type: String }],
     meta: {
         views: Number,
