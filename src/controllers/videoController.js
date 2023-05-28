@@ -10,6 +10,7 @@ Video.find({}, (error, videos) => {
 
 export const home = async(req, res) => {
         const videos = await Video.find({});    // await 키워드는 반드시 async 함수 안에서만 사용해야 한다.
+        console.log(videos);
         return res.render("home", { pageTitle : "Home", videos });
 };
 
@@ -33,7 +34,7 @@ export const getUpload = (req, res) => {
     return res.render("upload", {pageTitle : "Upload Video"});
 };
 
-export const postUpload = (req, res) => {
+export const postUpload = async (req, res) => {
     const {videoTitle, description, hashtags} = req.body;
     const video = new Video({
         title: videoTitle,
@@ -45,6 +46,6 @@ export const postUpload = (req, res) => {
             rating: 0,
         }
     });
-    console.log(video);
+    await video.save();
     return res.redirect("/");
 }
