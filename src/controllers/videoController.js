@@ -36,15 +36,22 @@ export const getUpload = (req, res) => {
 
 export const postUpload = async (req, res) => {
     const {videoTitle, description, hashtags} = req.body;
-    await Video.create({
-        title: videoTitle,
-        description,
-        createdAt: Date.now(),
-        hashtags: hashtags.replace(/\s/g, "").split(",").map((word) => `#${word}`), // hashtags 값에서, 공백을 제거하고, ","를 기준으로 분할한 후, "#"문자를 붙여 배열로 반환한다.
-        meta: {
-            views: 0,
-            rating: 0,
-        }
-    });
-    return res.redirect("/");
-}
+	try{
+    	await Video.create({
+    	    title: videoTitle,
+    	    description,
+    	    createdAt: Date.now(),
+    	    hashtags: hashtags.replace(/\s/g, "").split(",").map((word) => `#${word}`), // hashtags 값에서, 공백을 제거하고, ","를 기준으로 분할한 후, "#"문자를 붙여 배열로 반환한다.
+    	    meta: {
+    	        views: 0,
+    	        rating: 0,
+    	    }
+    	});
+    	return res.redirect("/");
+	} catch {
+		return res.render("upload",{
+			pageTitle: "Upload Video",
+			errorMessage: error._message,
+		});
+	};
+};
