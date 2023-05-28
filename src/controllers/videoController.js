@@ -40,7 +40,6 @@ export const postUpload = async (req, res) => {
     await Video.create({
       title: videoTitle,
       description,
-      createdAt: Date.now(),
       hashtags: hashtags
         .replace(/\s/g, "")
         .split(",")
