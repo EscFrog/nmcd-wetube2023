@@ -1,7 +1,7 @@
 extends base.pug
 
 block content
-  //- 아래는 ternary operator 구문이다. ternary: 셋으로 이루어지는
-  h3 #{video.views} #{video.views === 1 ? "view" : "views"}
-  //- absolute url 과 relative url의 차이에 주의할 것
+  div 
+    p=video.description
+    small=video.createdAt 
   a(href=`${video.id}/edit`) Edit Video &rarr;
