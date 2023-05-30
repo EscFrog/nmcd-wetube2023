@@ -3,8 +3,6 @@ mixin videoToMixin(item)
     h4
       //- a(href="/videos/" + item.id)=item.title
       a(href=`/videos/${item.id}`)=item.title
-    ul
-      li #{item.meta.rating}/5
-      li #{item.comments} comments.
-      li Posted #{item.createdAt}.
-      li #{item.meta.views} views.
+    p=item.descriptiion
+    small=item.createdAt
+    hr
