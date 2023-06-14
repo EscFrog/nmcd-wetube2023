@@ -35,7 +35,7 @@ export const getEdit = async (req, res) => {
 export const postEdit = async (req, res) => {
   const { id } = req.params;
   const { newTitle, newDescription, newHashtags } = req.body;
-  const video = await Video.findById(id);
+  const video = await Video.exists({ _id: id }); // 기존에는 모델 자체를 찾았다면, exists() 함수는 조건에 맞는 모델을 찾아보고 있으면 true, 없으면 false를 반환한다.
   if (!video) {
     return res.render("404", { pageTitle: "Video not found." });
   }
