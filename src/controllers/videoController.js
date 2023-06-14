@@ -32,9 +32,20 @@ export const getEdit = async (req, res) => {
   return res.render("edit", { pageTitle: `Edit: ${video.title}`, video });
 };
 
-export const postEdit = (req, res) => {
+export const postEdit = async (req, res) => {
   const { id } = req.params;
-  const { newTitle } = req.body;
+  const { newTitle, newDescription, newHashtags } = req.body;
+  const video = await Video.findById(id);
+  if (!video) {
+    return res.render("404", { pageTitle: "Video not found." });
+  }
+  video.title = newTitle;
+  video.description = newDescription;
+  video.hashtags = newHashtags
+    .replace(/\s/g, "")
+    .split(",")
+    .map((word) => `#${word}`);
+  await video.save();
   return res.redirect(`/videos/${id}`);
 };
 
