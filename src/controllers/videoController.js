@@ -1,15 +1,7 @@
 import Video from "../models/Video";
 
-/*
-// 이제 몽구스는 callback 패턴을 사용하지 않고 await async 패턴만 사용하지만
-// 만약 callback 패턴을 사용할 수 있었다면 다음과 같이 코드를 짤 수 있다.
-Video.find({}, (error, videos) => {
-    return res.render("home", { pageTitle: "Home", videos });
-});
-*/
-
 export const home = async (req, res) => {
-  const videos = await Video.find({}); // await 키워드는 반드시 async 함수 안에서만 사용해야 한다.
+  const videos = await Video.find({});
   console.log(videos);
   return res.render("home", { pageTitle: "Home", videos });
 };
@@ -35,7 +27,7 @@ export const getEdit = async (req, res) => {
 export const postEdit = async (req, res) => {
   const { id } = req.params;
   const { newTitle, newDescription, newHashtags } = req.body;
-  const video = await Video.exists({ _id: id }); // 기존에는 모델 자체를 찾았다면, exists() 함수는 조건에 맞는 모델을 찾아보고 있으면 true, 없으면 false를 반환한다.
+  const video = await Video.exists({ _id: id });
   if (!video) {
     return res.render("404", { pageTitle: "Video not found." });
   }
@@ -63,7 +55,7 @@ export const postUpload = async (req, res) => {
       hashtags: hashtags
         .replace(/\s/g, "")
         .split(",")
-        .map((word) => `#${word}`), // hashtags 값에서, 공백을 제거하고, ","를 기준으로 분할한 후, "#"문자를 붙여 배열로 반환한다.
+        .map((word) => `#${word}`),
     });
     return res.redirect("/");
   } catch {
