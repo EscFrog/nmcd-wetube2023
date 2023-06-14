@@ -1,7 +1,7 @@
 extends base.pug
 
 block content 
-  if errorMessage 
+  if errorMessage
     span=errorMessage
   form(method="POST")
     input(name="videoTitle" placeholder="Title", required, type="text", maxlength=80)
