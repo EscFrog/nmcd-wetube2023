@@ -44,7 +44,7 @@ export const postEdit = async (req, res) => {
   video.hashtags = newHashtags
     .replace(/\s/g, "")
     .split(",")
-    .map((word) => `#${word}`);
+    .map((word) => (word.startsWith("#") ? word : `#${word}`));
   await video.save();
   return res.redirect(`/videos/${id}`);
 };
