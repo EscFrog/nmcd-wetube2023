@@ -4,5 +4,8 @@ mixin videoToMixin(item)
       //- a(href="/videos/" + item.id)=item.title
       a(href=`/videos/${item.id}`)=item.title
     p=item.descriptiion
+    ul
+      each hashtag in item.hashtags
+        li=hashtag
     small=item.createdAt
     hr
