@@ -2,7 +2,7 @@ import express from "express"; // express를 가져오는 최신 문법. 이 코
 //const express = require("express");
 import morgan from "morgan";
 
-import rootRouter from "./routers/globalRouter";
+import rootRouter from "./routers/rootRouter";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 
