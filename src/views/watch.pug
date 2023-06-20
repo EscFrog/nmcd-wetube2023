@@ -1,9 +1,14 @@
 extends base.pug
+include mixins/video
 
 block content
   div 
     p=video.description
     small=video.createdAt 
+    ul
+      each hashtag in video.hashtags
+        li=hashtag
+  br
   a(href=`${video.id}/edit`) Edit Video &rarr;
   br
   a(href=`${video.id}/delete`) Delete Video &rarr;
