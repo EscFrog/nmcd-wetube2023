@@ -46,7 +46,6 @@ export const postLogin = async (req, res) => {
       errorMessage: "An account with this username does not exists.",
     });
   }
-  // check if account exist
   // check if password correct
   res.end();
 };
