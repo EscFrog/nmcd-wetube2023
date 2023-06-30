@@ -32,7 +32,8 @@ app.use((req, res, next) => {
 });
 
 app.get("/add-one", (req, res, next) => {
-  return res.send(`${req.session.id}`);
+  req.session.potato += 1;
+  return res.send(`${req.session.id}\n${req.session.potato}`);
 });
 
 app.use("/", rootRouter);
