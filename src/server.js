@@ -22,10 +22,10 @@ app.use(express.urlencoded({ extended: true })); // 순서가 중요하다. 비�
 // express가 세션 아이디를 만들어서 쿠키를 전달한다.
 app.use(
   session({
-    secret: "Hello!",
+    secret: process.env.COOKIE_SECRET,
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: "mongodb://127.0.0.1:27017/wetube" }),
+    store: MongoStore.create({ mongoUrl: process.env.DB_URL }),
   })
 );
 
