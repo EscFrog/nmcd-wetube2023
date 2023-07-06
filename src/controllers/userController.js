@@ -62,6 +62,20 @@ export const postLogin = async (req, res) => {
   return res.redirect("/");
 };
 
+export const startGithubLogin = (req, res) => {
+  const baseUrl = "https://github.com/login/oauth/authorize";
+  const config = {
+    client_id: "db43e6da937093dded41",
+    allow_signup: false,
+    scope: "read:user user:email",
+  };
+  const params = new URLSearchParams(config).toString(); // URLSearchParmas 객체는 전달받은 객체를 URL형식에 맞게 만들어준다.
+  const finalUrl = `${baseUrl}?${params}`;
+  return res.redirect(finalUrl);
+};
+
+export const finishGithubLogin = (req, res) => {};
+
 export const logout = (req, res) => res.send("Log out");
 export const edit = (req, res) => res.send("Edit User");
 export const remove = (req, res) => res.send("Remove User");
