@@ -74,7 +74,14 @@ export const startGithubLogin = (req, res) => {
   return res.redirect(finalUrl);
 };
 
-export const finishGithubLogin = (req, res) => {};
+export const finishGithubLogin = (req, res) => {
+  const config = {
+    client_id: process.env.GH_CLIENT,
+    client_secret: process.env.GH_SECRET,
+    code: req.query.code,
+  };
+  console.log(config);
+};
 
 export const logout = (req, res) => res.send("Log out");
 export const edit = (req, res) => res.send("Edit User");
