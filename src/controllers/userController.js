@@ -120,11 +120,19 @@ export const finishGithubLogin = async (req, res) => {
     if (existingUser) {
       req.session.loggedIn = true;
       req.session.user = existingUser;
-      console.log("OK, Login");
       return res.redirect("/");
     } else {
-      //create an account
-      console.log("can't find");
+      const user = await User.create({
+        name: userData.name,
+        username: userData.login,
+        email: emailObj.email,
+        password: "",
+        socialOnly: true,
+        location: userData.location,
+      });
+      req.session.loggedIn = true;
+      req.session.user = user;
+      return res.redirect("/");
     }
   } else {
     return res.redirect("/login");
