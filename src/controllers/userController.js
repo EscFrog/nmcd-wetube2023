@@ -149,7 +149,7 @@ export const postEdit = async (req, res) => {
     session: {
       user: { _id },
     },
-    body: { name, email, username, locaiton },
+    body: { name, email, username, location },
   } = req;
   await User.findByIdAndUpdate(_id, {
     name,
@@ -157,7 +157,14 @@ export const postEdit = async (req, res) => {
     username,
     location,
   });
-  return res.render("edit-profile");
+  req.session.user = {
+    ...req.session.user, // req.session.user의 모든 요소를 밖으로 빼내준다.
+    name,
+    email,
+    username,
+    location,
+  };
+  return res.redirect("/users/edit");
 };
 
 export const see = (req, res) => res.send("See User");
