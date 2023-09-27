@@ -151,19 +151,17 @@ export const postEdit = async (req, res) => {
     },
     body: { name, email, username, location },
   } = req;
-  await User.findByIdAndUpdate(_id, {
-    name,
-    email,
-    username,
-    location,
-  });
-  req.session.user = {
-    ...req.session.user, // req.session.user의 모든 요소를 밖으로 빼내준다.
-    name,
-    email,
-    username,
-    location,
-  };
+  const updatedUser = await User.findByIdAndUpdate(
+    _id,
+    {
+      name,
+      email,
+      username,
+      location,
+    },
+    { new: true }
+  );
+  req.session.user = updatedUser;
   return res.redirect("/users/edit");
 };
 
