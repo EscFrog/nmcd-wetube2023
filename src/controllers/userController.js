@@ -164,5 +164,17 @@ export const postEdit = async (req, res) => {
   req.session.user = updatedUser;
   return res.redirect("/users/edit");
 };
-// 사용자가 username 이나 email을 업데이트하려고 할 때, 중복된 데이터가 있으면 변경할 수 없게 처리해야 함. 코드 챌린지.
+
+export const getChangePassword = (req, res) => {
+  if (req.session.user.socialOnly === true) {
+    return res.redirect("/");
+  }
+  return res.render("users/change-password", { pageTitle: "Change Password" });
+};
+export const postChangePassword = (req, res) => {
+  // sedn notification
+  return res.redirect("/");
+};
+
+// 코드 챌린지 : 사용자가 username 이나 email을 업데이트하려고 할 때, 중복된 데이터가 있으면 변경할 수 없게 처리해야 함.
 export const see = (req, res) => res.send("See User");
