@@ -171,9 +171,35 @@ export const getChangePassword = (req, res) => {
   }
   return res.render("users/change-password", { pageTitle: "Change Password" });
 };
-export const postChangePassword = (req, res) => {
+export const postChangePassword = async (req, res) => {
+  const {
+    session: {
+      user: { _id, password },
+    },
+    body: { oldPassword, newPassword, newPasswordConfirmation },
+  } = req;
+  const ok = await bcrypt.compare(oldPassword, password);
+  if (!ok) {
+    return res.status(400).render("users/change-password", {
+      pageTitle: "Change Password",
+      errorMessage: "The current password is incorrect",
+    });
+  }
+  if (newPassword !== newPasswordConfirmation) {
+    return res.status(400).render("users/change-password", {
+      pageTitle: "Change Password",
+      errorMessage: "The password does not match the confirmation",
+    });
+  }
+  const user = await User.findById(_id);
+  console.log("Old password", user.password);
+  user.password = newPassword;
+  console.log("New unhashed password", user.password);
+  await user.save();
+  console.log("New password", user.password);
+  req.session.user.password = user.password;
   // sedn notification
-  return res.redirect("/");
+  return res.redirect("/users/logout");
 };
 
 // 코드 챌린지 : 사용자가 username 이나 email을 업데이트하려고 할 때, 중복된 데이터가 있으면 변경할 수 없게 처리해야 함.
