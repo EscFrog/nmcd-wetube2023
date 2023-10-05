@@ -1,6 +1,8 @@
 extends base.pug
 
 block content
+  img(src="/" + loggedInUser.avatarUrl, width="100", height="100")
+  //- from의 enctype을 multipart/form-data로 설정한 이유는, multer 미들웨어 때문
   form(method="POST", enctype="multipart/form-data")
     label(for="avatar") Avatar
     input(type="file", id="avatar", name="avatar", accept="image/*")
