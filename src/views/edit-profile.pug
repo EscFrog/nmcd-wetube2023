@@ -1,7 +1,9 @@
 extends base.pug
 
 block content
-  form(method="POST")
+  form(method="POST", enctype="multipart/form-data")
+    label(for="avatar") Avatar
+    input(type="file", id="avatar", name="avatar", accept="image/*")
     //- 이 아래에서 쓰는 loggedInUser 변수는 미들웨어에서 자동으로 템플릿에 전달해주는 것. middlewares.js 파일에 있다.
     input(placeholder="Name", name="name", type="text", required, value=loggedInUser.name)
     input(placeholder="Email", name="email", type="email", required, value=loggedInUser.email)
