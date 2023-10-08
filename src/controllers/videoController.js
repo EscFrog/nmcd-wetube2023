@@ -48,17 +48,20 @@ export const getUpload = (req, res) => {
 export const postUpload = async (req, res) => {
   const {
     user: { _id },
-  } = req.session;
+  } = req.session; // 현재 접속한 세션의 유저 id
   const { path: fileUrl } = req.file;
   const { videoTitle, description, hashtags } = req.body;
   try {
-    await Video.create({
+    const newVideo = await Video.create({
       title: videoTitle,
       description,
       fileUrl,
       owner: _id,
       hashtags: Video.formatHashtags(hashtags),
     });
+    const user = await User.findById(_id); // 세션의 유저가 아니라 DB에서 유저를 찾는다.
+    user.videos.push(newVideo._id);
+    user.save();
     return res.redirect("/");
   } catch (error) {
     console.log(error);
