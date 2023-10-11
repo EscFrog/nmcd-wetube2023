@@ -18,6 +18,10 @@ module.exports = {
           },
         },
       },
+      {
+        test: /\.scss$/,
+        use: ["style-loader", "css-loader", "sass-loader"], // 순서가 중요. webpack은 제일 뒤에서부터 실행.
+      },
     ],
   },
 };
