@@ -6,8 +6,8 @@
     "url": "https://github.com/EscFrog/wetube"
   },
   "scripts": {
-    "server": "nodemon --exec babel-node src/init.js",
-    "assets": "webpack --config webpack.config.js"
+    "dev:server": "nodemon",
+    "dev:assets": "webpack"
   },
   "author": "EscFrog",
   "license": "MIT",
