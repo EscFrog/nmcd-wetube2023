@@ -1,11 +1,8 @@
 mixin videoToMixin(item)
-  div
-    h4
-      //- a(href="/videos/" + item.id)=item.title
-      a(href=`/videos/${item.id}`)=item.title
-    p=item.description
-    ul
-      each hashtag in item.hashtags
-        li=hashtag
-    small=item.createdAt
-    hr
+  a(href=`/videos/${item.id}`).video-mixin 
+    div.video-mixin__thumb
+    div.video-mixin__data
+      span.video-mixin__title=item.title
+      div.video-mixin__meta
+        span #{item.owner.name} • 
+        span #{item.meta.views}회
