@@ -1,5 +1,4 @@
 import User from "../models/User";
-import Video from "../models/Video";
 import fetch from "node-fetch";
 import bcrypt from "bcrypt";
 
@@ -205,7 +204,13 @@ export const postChangePassword = async (req, res) => {
 // 코드 챌린지 : 사용자가 username 이나 email을 업데이트하려고 할 때, 중복된 데이터가 있으면 변경할 수 없게 처리해야 함.
 export const see = async (req, res) => {
   const { id } = req.params;
-  const user = await User.findById(id).populate("videos");
+  const user = await User.findById(id).populate({
+    path: "videos",
+    populate: {
+      path: "owner",
+      model: "User",
+    },
+  });
   if (!user) {
     return res.status(404).render("404", { pageTitle: "User not found." });
   }
