@@ -74,10 +74,17 @@ const handleFullScreen = () => {
   const fullscreen = document.fullscreenElement;
   if (fullscreen) {
     document.exitFullscreen();
-    fullScreenBtnIcon.classList = "fas fa-expand";
   } else {
     videoContainer.requestFullscreen();
+  }
+};
+
+const changeFullscreenIcon = () => {
+  const fullscreen = document.fullscreenElement;
+  if (fullscreen) {
     fullScreenBtnIcon.classList = "fas fa-compress";
+  } else {
+    fullScreenBtnIcon.classList = "fas fa-expand";
   }
 };
 
@@ -93,11 +100,28 @@ const handleMouseMove = () => {
     controlsMovementTimeout = null;
   }
   videoControls.classList.add("showing");
-  controlsMovementTimeout = setTimeout(hideControls, 2000);
+  controlsMovementTimeout = setTimeout(hideControls, 1500);
 };
 
 const handleMouseLeave = () => {
   controlsTimeout = setTimeout(hideControls, 2000);
+};
+
+const handleKeyDown = (event) => {
+  if (event.code === "Space") {
+    event.preventDefault();
+    handleMouseMove();
+    handlePlayClick();
+  }
+  if (event.code === "Enter") {
+    event.preventDefault();
+    handleMouseMove();
+    handleFullScreen();
+  }
+  if (event.key === "m") {
+    handleMouseMove();
+    handleMute();
+  }
 };
 
 playBtn.addEventListener("click", handlePlayClick);
@@ -105,7 +129,10 @@ muteBtn.addEventListener("click", handleMute);
 volumeRange.addEventListener("input", handleVolumeChange);
 video.addEventListener("loadeddata", handleLoadedMetadata);
 video.addEventListener("timeupdate", handleTimeUpdate);
+video.addEventListener("click", handlePlayClick);
 videoContainer.addEventListener("mousemove", handleMouseMove);
 videoContainer.addEventListener("mouseleave", handleMouseLeave);
 timeline.addEventListener("input", handleTimelineChange);
 fullScreenBtn.addEventListener("click", handleFullScreen);
+document.addEventListener("fullscreenchange", changeFullscreenIcon);
+document.addEventListener("keydown", handleKeyDown);
