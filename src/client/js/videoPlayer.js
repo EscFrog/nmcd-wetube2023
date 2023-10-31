@@ -63,6 +63,25 @@ const handleTimeUpdate = () => {
   timeline.value = Math.floor(video.currentTime);
 };
 
+const hideControls = () => videoControls.classList.remove("showing");
+
+const handleMouseMove = () => {
+  if (controlsTimeout) {
+    clearTimeout(controlsTimeout);
+    controlsTimeout = null;
+  }
+  if (controlsMovementTimeout) {
+    clearTimeout(controlsMovementTimeout);
+    controlsMovementTimeout = null;
+  }
+  videoControls.classList.add("showing");
+  controlsMovementTimeout = setTimeout(hideControls, 1500);
+};
+
+const handleMouseLeave = () => {
+  controlsTimeout = setTimeout(hideControls, 2000);
+};
+
 const handleTimelineChange = (event) => {
   const {
     target: { value },
@@ -86,25 +105,6 @@ const changeFullscreenIcon = () => {
   } else {
     fullScreenBtnIcon.classList = "fas fa-expand";
   }
-};
-
-const hideControls = () => videoControls.classList.remove("showing");
-
-const handleMouseMove = () => {
-  if (controlsTimeout) {
-    clearTimeout(controlsTimeout);
-    controlsTimeout = null;
-  }
-  if (controlsMovementTimeout) {
-    clearTimeout(controlsMovementTimeout);
-    controlsMovementTimeout = null;
-  }
-  videoControls.classList.add("showing");
-  controlsMovementTimeout = setTimeout(hideControls, 1500);
-};
-
-const handleMouseLeave = () => {
-  controlsTimeout = setTimeout(hideControls, 2000);
 };
 
 const handleKeyDown = (event) => {
