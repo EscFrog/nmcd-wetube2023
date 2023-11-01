@@ -7,6 +7,10 @@ header {
     color: $red;
     font-size: 38px;
   }
+  .header__title{
+    color: $main;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  }
   ul {
     display: flex;
     justify-content: space-between;
