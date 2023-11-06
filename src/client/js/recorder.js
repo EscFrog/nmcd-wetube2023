@@ -4,10 +4,12 @@ const previewScreen = document.getElementById("preview");
 let stream;
 let recorder;
 
+const handleDownload = () => {};
+
 const handleStopRecording = () => {
-  startBtn.innerText = "Start Recording";
+  startBtn.innerText = "Download Recording";
   startBtn.removeEventListener("click", handleStopRecording);
-  startBtn.addEventListener("click", handleStartRecording);
+  startBtn.addEventListener("click", handleDownload);
   recorder.stop();
 };
 
