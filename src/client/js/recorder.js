@@ -11,6 +11,7 @@ const handleDownload = () => {
   a.download = "MyRecording.webm";
   document.body.appendChild(a);
   a.click();
+  init();
 };
 
 const handleStopRecording = () => {
@@ -42,8 +43,9 @@ const init = async () => {
   });
   previewScreen.srcObject = stream;
   previewScreen.play();
+  startBtn.innerText = "Start Recording";
+  startBtn.removeEventListener("click", handleDownload);
+  startBtn.addEventListener("click", handleStartRecording);
 };
 
 init();
-
-startBtn.addEventListener("click", handleStartRecording);
