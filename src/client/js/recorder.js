@@ -3,8 +3,15 @@ const previewScreen = document.getElementById("preview");
 
 let stream;
 let recorder;
+let videoFile;
 
-const handleDownload = () => {};
+const handleDownload = () => {
+  const a = document.createElement("a");
+  a.href = videoFile;
+  a.download = "MyRecording.webm";
+  document.body.appendChild(a);
+  a.click();
+};
 
 const handleStopRecording = () => {
   startBtn.innerText = "Download Recording";
@@ -19,7 +26,7 @@ const handleStartRecording = () => {
   startBtn.addEventListener("click", handleStopRecording);
   recorder = new MediaRecorder(stream);
   recorder.ondataavailable = (event) => {
-    const videoFile = URL.createObjectURL(event.data); // 브라우저 메모리에 비디오가 저장된 위치를 URL로 생성
+    videoFile = URL.createObjectURL(event.data); // 브라우저 메모리에 비디오가 저장된 위치를 URL로 생성
     previewScreen.srcObject = null;
     previewScreen.src = videoFile;
     previewScreen.loop = true;
