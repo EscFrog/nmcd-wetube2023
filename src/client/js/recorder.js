@@ -17,7 +17,11 @@ const handleStartRecording = () => {
   startBtn.addEventListener("click", handleStopRecording);
   recorder = new MediaRecorder(stream);
   recorder.ondataavailable = (event) => {
-    console.log(event.data);
+    const videoFile = URL.createObjectURL(event.data); // 브라우저 메모리에 비디오가 저장된 위치를 URL로 생성
+    previewScreen.srcObject = null;
+    previewScreen.src = videoFile;
+    previewScreen.loop = true;
+    previewScreen.play();
   };
   recorder.start();
 };
