@@ -14,17 +14,40 @@ const handleDownload = async () => {
   ffmpeg.FS("writeFile", "recording.webm", await fetchFile(videoFileUrl));
   await ffmpeg.run("-i", "recording.webm", "-r", "60", "output.mp4");
 
-  const mp4File = ffmpeg.FS("readFile", "output.mp4");
-  const mp4Blob = new Blob([mp4File.buffer], { type: "video/mp4" });
-  const mp4Url = URL.createObjectURL(mp4Blob);
+  // 썸네일 이미지로 사용하기 위해 영상의 1초 지점의 1프레임을 thumbnail.jpg 파일로 저장한다.
+  await ffmpeg.run(
+    "-i",
+    "recording.webm",
+    "-ss",
+    "00:00:01",
+    "-frames:v",
+    "1",
+    "thumbnail.jpg"
+  );
 
-  const a = document.createElement("a");
-  a.href = mp4Url;
-  a.download = "MyRecording.mp4";
-  // a.href = videoFileUrl;
-  // a.download = "MyRecording.webm";
-  document.body.appendChild(a);
-  a.click();
+  const mp4File = ffmpeg.FS("readFile", "output.mp4");
+  const thumbFile = ffmpeg.FS("readFile", "thumbnail.jpg");
+
+  const mp4Blob = new Blob([mp4File.buffer], { type: "video/mp4" });
+  const thumbBlob = new Blob([thumbFile.buffer], { type: "image/jpg" });
+
+  const mp4Url = URL.createObjectURL(mp4Blob);
+  const thumbUrl = URL.createObjectURL(thumbBlob);
+
+  const videoDownAnchor = document.createElement("a");
+  videoDownAnchor.href = mp4Url;
+  videoDownAnchor.download = "MyRecording.mp4";
+  // videoDownAnchor.href = videoFileUrl;
+  // videoDownAnchor.download = "MyRecording.webm";
+  document.body.appendChild(videoDownAnchor);
+  videoDownAnchor.click();
+
+  const thumbDownAnchor = document.createElement("a");
+  thumbDownAnchor.href = thumbUrl;
+  thumbDownAnchor.download = "MyThumbnail.jpg";
+  document.body.appendChild(thumbDownAnchor);
+  thumbDownAnchor.click();
+
   init();
 };
 
