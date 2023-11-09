@@ -1,32 +1,50 @@
 import { createFFmpeg, fetchFile } from "@ffmpeg/ffmpeg";
 
-const startBtn = document.getElementById("startBtn");
+const actionBtn = document.getElementById("actionBtn");
 const previewScreen = document.getElementById("preview");
 
 let stream;
 let recorder;
 let videoFileUrl;
 
+const files = {
+  input: "recording.webm",
+  output: "output.mp4",
+  thumb: "thumbnail.jpg",
+};
+
+const downloadFile = (fileUrl, fileName) => {
+  const tempAnchor = document.createElement("a");
+  tempAnchor.href = fileUrl;
+  tempAnchor.download = fileName;
+  document.body.appendChild(tempAnchor);
+  tempAnchor.click();
+};
+
 const handleDownload = async () => {
+  actionBtn.removeEventListener("click", handleDownload);
+  actionBtn.innerText = "Transcoding...";
+  actionBtn.disabled = true;
+
   const ffmpeg = createFFmpeg({ log: true });
   await ffmpeg.load();
 
-  ffmpeg.FS("writeFile", "recording.webm", await fetchFile(videoFileUrl));
-  await ffmpeg.run("-i", "recording.webm", "-r", "60", "output.mp4");
+  ffmpeg.FS("writeFile", files.input, await fetchFile(videoFileUrl));
+  await ffmpeg.run("-i", files.input, "-r", "60", files.output);
 
   // 썸네일 이미지로 사용하기 위해 영상의 1초 지점의 1프레임을 thumbnail.jpg 파일로 저장한다.
   await ffmpeg.run(
     "-i",
-    "recording.webm",
+    files.input,
     "-ss",
     "00:00:01",
     "-frames:v",
     "1",
-    "thumbnail.jpg"
+    files.thumb
   );
 
-  const mp4File = ffmpeg.FS("readFile", "output.mp4");
-  const thumbFile = ffmpeg.FS("readFile", "thumbnail.jpg");
+  const mp4File = ffmpeg.FS("readFile", files.output);
+  const thumbFile = ffmpeg.FS("readFile", files.thumb);
 
   const mp4Blob = new Blob([mp4File.buffer], { type: "video/mp4" });
   const thumbBlob = new Blob([thumbFile.buffer], { type: "image/jpg" });
@@ -34,42 +52,33 @@ const handleDownload = async () => {
   const mp4Url = URL.createObjectURL(mp4Blob);
   const thumbUrl = URL.createObjectURL(thumbBlob);
 
-  const videoDownAnchor = document.createElement("a");
-  videoDownAnchor.href = mp4Url;
-  videoDownAnchor.download = "MyRecording.mp4";
-  // videoDownAnchor.href = videoFileUrl;
-  // videoDownAnchor.download = "MyRecording.webm";
-  document.body.appendChild(videoDownAnchor);
-  videoDownAnchor.click();
+  downloadFile(mp4Url, "MyRecording.mp4");
+  downloadFile(thumbUrl, "MyThumbnail.jpg");
 
-  const thumbDownAnchor = document.createElement("a");
-  thumbDownAnchor.href = thumbUrl;
-  thumbDownAnchor.download = "MyThumbnail.jpg";
-  document.body.appendChild(thumbDownAnchor);
-  thumbDownAnchor.click();
-
-  ffmpeg.FS("unlink", "recording.webm");
-  ffmpeg.FS("unlink", "output.mp4");
-  ffmpeg.FS("unlink", "thumbnail.jpg");
+  ffmpeg.FS("unlink", files.input);
+  ffmpeg.FS("unlink", files.output);
+  ffmpeg.FS("unlink", files.thumb);
 
   URL.revokeObjectURL(mp4Url);
   URL.revokeObjectURL(thumbUrl);
   URL.revokeObjectURL(videoFileUrl);
 
-  init();
+  actionBtn.disabled = false;
+  actionBtn.innerText = "Record Again";
+  actionBtn.addEventListener("click", handleStartRecording);
 };
 
 const handleStopRecording = () => {
-  startBtn.innerText = "Download Recording";
-  startBtn.removeEventListener("click", handleStopRecording);
-  startBtn.addEventListener("click", handleDownload);
+  actionBtn.innerText = "Download Recording";
+  actionBtn.removeEventListener("click", handleStopRecording);
+  actionBtn.addEventListener("click", handleDownload);
   recorder.stop();
 };
 
 const handleStartRecording = () => {
-  startBtn.innerText = "Stop Recording";
-  startBtn.removeEventListener("click", handleStartRecording);
-  startBtn.addEventListener("click", handleStopRecording);
+  actionBtn.innerText = "Stop Recording";
+  actionBtn.removeEventListener("click", handleStartRecording);
+  actionBtn.addEventListener("click", handleStopRecording);
   recorder = new MediaRecorder(stream);
   recorder.ondataavailable = (event) => {
     videoFileUrl = URL.createObjectURL(event.data); // 브라우저 메모리에 비디오가 저장된 위치를 URL로 생성
@@ -88,9 +97,9 @@ const init = async () => {
   });
   previewScreen.srcObject = stream;
   previewScreen.play();
-  startBtn.innerText = "Start Recording";
-  startBtn.removeEventListener("click", handleDownload);
-  startBtn.addEventListener("click", handleStartRecording);
+  actionBtn.innerText = "Start Recording";
+  actionBtn.removeEventListener("click", handleDownload);
+  actionBtn.addEventListener("click", handleStartRecording);
 };
 
 init();
