@@ -4,6 +4,7 @@ const videoSchema = new mongoose.Schema({
   title: { type: String, required: true, trim: true, maxLength: 80 },
   // 위 코드는 축약형. 원래는 title: { type: String },
   fileUrl: { type: String, required: true },
+  thumbUrl: { type: String, required: true },
   description: { type: String, required: true, trim: true, minLength: 20 },
   createdAt: { type: Date, default: Date.now },
   hashtags: [{ type: String, trim: true }],
