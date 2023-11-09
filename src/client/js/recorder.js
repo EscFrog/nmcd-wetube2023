@@ -66,6 +66,9 @@ const handleDownload = async () => {
   actionBtn.disabled = false;
   actionBtn.innerText = "Record Again";
   actionBtn.addEventListener("click", handleStartRecording);
+
+  previewScreen.srcObject = stream;
+  previewScreen.play();
 };
 
 const handleStopRecording = () => {
