@@ -113,11 +113,6 @@ const handleKeyDown = (event) => {
     handleMouseMove();
     handlePlayClick();
   }
-  if (event.code === "Enter") {
-    event.preventDefault();
-    handleMouseMove();
-    handleFullScreen();
-  }
   if (event.key === "m") {
     handleMouseMove();
     handleMute();
