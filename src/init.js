@@ -2,6 +2,7 @@ import "dotenv/config";
 import "./db"; // 파일을 임포트하면 즉시 실행된다.
 import "./models/Video";
 import "./models/User";
+import "./models/Comment";
 import app from "./server";
 
 const PORT = 4000;
