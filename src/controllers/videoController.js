@@ -156,3 +156,32 @@ export const createComment = async (req, res) => {
 
   return res.status(201).json({ newCommentId: comment._id });
 };
+
+export const deleteComment = async (req, res) => {
+  const {
+    session: {
+      user: { _id },
+    },
+    params: { id },
+  } = req;
+
+  const comment = await Comment.findById(id);
+  const videoId = comment.video;
+  const video = await Video.findById(videoId);
+  const ownerId = comment.owner;
+  const owner = await User.findById(ownerId);
+
+  if (String(_id) !== String(ownerId) || !video || !owner) {
+    return res.sendStatus(404);
+  }
+
+  video.comments.splice(video.comments.indexOf(id), 1);
+  await video.save();
+
+  owner.comments.splice(owner.comments.indexOf(id), 1);
+  await owner.save();
+
+  await Comment.findByIdAndDelete(id);
+
+  return res.sendStatus(200);
+};
