@@ -12,7 +12,7 @@ const fullScreenBtnIcon = fullScreenBtn.querySelector("i");
 const videoContainer = document.getElementById("videoContainer");
 const videoControls = document.getElementById("videoControls");
 
-const textarea = document.querySelector("textarea");
+const textarea = document.querySelector("#commentForm textarea");
 
 let controlsTimeout = null;
 let controlsMovementTimeout = null;
