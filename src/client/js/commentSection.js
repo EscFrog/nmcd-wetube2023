@@ -1,6 +1,6 @@
 const videoContainer = document.getElementById("videoContainer");
 const form = document.getElementById("commentForm");
-const deleteBtns = document.querySelectorAll(".video__comment button");
+const deleteBtns = document.querySelectorAll(".video__comment .deleteComment");
 
 const addComment = (text, id) => {
   const videoComments = document.querySelector(".video__comments ul");
@@ -11,7 +11,7 @@ const addComment = (text, id) => {
   icon.className = "fas fa-comment";
   const span = document.createElement("span");
   span.innerText = ` ${text} `;
-  const deleteBtn = document.createElement("button");
+  const deleteBtn = document.createElement("span");
   deleteBtn.innerText = "❌";
   newComment.appendChild(icon);
   newComment.appendChild(span);
