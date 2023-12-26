@@ -47,6 +47,8 @@ const handleDeleteComment = async (event) => {
   const comment = event.target.parentNode;
   const commentId = comment.dataset.id;
 
+  // 지우려는 사람이 댓글 작성자인지 확인하는 부분 구현해야 함.
+
   const response = await fetch(`/api/comments/${commentId}/delete`, {
     method: "DELETE",
   });
