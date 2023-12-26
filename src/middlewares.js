@@ -26,10 +26,13 @@ export const publicOnlyMiddleware = (req, res, next) => {
   }
 };
 
+// 비디오 파일 크기는 3MB 제한
 export const avatarUpload = multer({
   dest: "uploads/avatars/",
   limits: { fileSize: 3000000 },
 });
+
+// 비디오 파일 크기는 10MB 제한
 export const videoUpload = multer({
   dest: "uploads/videos/",
   limits: { fileSize: 10000000 },
