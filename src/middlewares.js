@@ -12,8 +12,9 @@ const s3 = new S3Client({
 
 const multerUploader = multerS3({
   s3: s3,
-  bucket: "wetube-escfrog",
+  bucket: "escfrog-wetube-bucket",
   acl: "public-read",
+  contentType: multerS3.AUTO_CONTENT_TYPE,
 });
 
 export const localsMiddleware = (req, res, next) => {
