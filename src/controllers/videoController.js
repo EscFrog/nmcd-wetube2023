@@ -1,6 +1,7 @@
 import Video from "../models/Video";
 import Comment from "../models/Comment";
 import User from "../models/User";
+import isHeroku from "../checkENV";
 
 export const home = async (req, res) => {
   const videos = await Video.find({})
@@ -70,8 +71,8 @@ export const postUpload = async (req, res) => {
     const newVideo = await Video.create({
       title: videoTitle,
       description,
-      fileUrl: video[0].location,
-      thumbUrl: thumb[0].location,
+      fileUrl: isHeroku ? video[0].location : `/${video[0].path}`,
+      thumbUrl: isHeroku ? thumb[0].location : `/${thumb[0].path}`,
       owner: _id,
       hashtags: Video.formatHashtags(hashtags),
     });
