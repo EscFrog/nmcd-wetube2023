@@ -22,19 +22,22 @@ block content
   div.video__data
     div.video__data__info
       p.video__title=video.title
+      div.video__hashtags
+        each hashtag in video.hashtags
+          span.video__hashtag=hashtag
+    div.video_data__uploadInfo
       small.video__owner Uploaded by 
         a(href=`/users/${video.owner._id}`)=video.owner.name
       small.video__createdAt=new Date(video.createdAt).toLocaleDateString("ko-kr", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
-    if String(video.owner._id) === String(loggedInUser._id)
-      div.video__data__modify
-        div
-          a(href=`${video.id}/edit`)
+      if String(video.owner._id) === String(loggedInUser._id)
+        div.video__data__modify
+          a(href=`${video.id}/edit`).video__modify__edit
             span Edit Video
             i.fa-solid.fa-square-pen
-        div
-          a(href=`${video.id}/delete`)
+          a(href=`${video.id}/delete`).video__modify__delete
             span Delete Video
             i.fa-solid.fa-trash-can
+  p.video__desc=video.description
   if loggedIn
     div.video__add-comments
       form.video__comment-form#commentForm
@@ -54,9 +57,8 @@ block content
                   span #{comment.owner.username}
               if String(comment.owner._id) === String(loggedInUser._id)
                 i.fa-solid.fa-trash-can
-            div.video__comment__text #{comment.text} 
-        else 
-          li nothing
+            div.video__comment__text 
+              p #{comment.text} 
 
 block scripts 
   script(src="/static/js/videoPlayer.js")
