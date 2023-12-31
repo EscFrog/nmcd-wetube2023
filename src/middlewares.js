@@ -17,7 +17,7 @@ const s3ImageUploader = multerS3({
   acl: "public-read",
   contentType: multerS3.AUTO_CONTENT_TYPE,
   key: function (req, file, callback) {
-    callback(null, "images/" + Date.now().toString() + file.originalname);
+    callback(null, "images/" + Date.now().toString() + "_" + file.originalname);
   },
 });
 
@@ -27,7 +27,7 @@ const s3VideoUploader = multerS3({
   acl: "public-read",
   contentType: multerS3.AUTO_CONTENT_TYPE,
   key: function (req, file, callback) {
-    callback(null, "videos/" + Date.now().toString() + file.originalname);
+    callback(null, "videos/" + Date.now().toString() + "_" + file.originalname);
   },
 });
 
