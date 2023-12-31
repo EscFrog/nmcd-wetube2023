@@ -1,25 +1,40 @@
 const videoContainer = document.getElementById("videoContainer");
 const form = document.getElementById("commentForm");
-const delIcon = document.querySelectorAll(".video__comment i");
+const delIcon = document.querySelectorAll(
+  ".video__comment .video__comment__info .fa-trash-can"
+);
 
 const addComment = (text, id) => {
   const videoComments = document.querySelector(".video__comments ul");
-  const newComment = document.createElement("li");
-  newComment.className = "video__comment";
-  newComment.dataset.id = id;
-  const icon = document.createElement("i");
-  icon.className = "fas fa-comment";
-  const commentText = document.createElement("div");
-  commentText.className = "video__comment__text";
-  const span = document.createElement("span");
-  span.innerText = ` ${text} `;
-  commentText.appendChild(span);
+  const videoComment = document.createElement("li");
+  videoComment.className = "video__comment";
+  videoComment.dataset.id = id;
+
+  const commentInfo = document.createElement("div");
+  commentInfo.className = "video__comment__info";
+  videoComment.appendChild(commentInfo);
+
+  const bubbleIcon = document.createElement("i");
+  bubbleIcon.className = "fas fa-comment";
+  commentInfo.appendChild(bubbleIcon);
+
+  const commentOwner = document.createElement("div");
+  commentOwner.className = "comment__owner";
+  const commentOwnerName = document.createElement("span");
+  commentOwnerName.innerText = "You";
+  commentOwner.appendChild(commentOwnerName);
+  commentInfo.appendChild(commentOwner);
+
   const delIcon = document.createElement("i");
   delIcon.className = "fa-solid fa-trash-can";
-  newComment.appendChild(icon);
-  newComment.appendChild(commentText);
-  newComment.appendChild(delIcon);
-  videoComments.prepend(newComment);
+  commentInfo.appendChild(delIcon);
+
+  const commentText = document.createElement("div");
+  commentText.className = "video__comment__text";
+  commentText.innerText = `${text}`;
+  videoComment.appendChild(commentText);
+
+  videoComments.prepend(videoComment);
   delIcon.addEventListener("click", handleDeleteComment);
 };
 
@@ -47,7 +62,8 @@ const handleSubmit = async (event) => {
 };
 
 const handleDeleteComment = async (event) => {
-  const comment = event.target.parentNode;
+  const comment = event.target.parentNode.parentNode;
+  console.log(comment);
   const commentId = comment.dataset.id;
 
   const response = await fetch(`/api/comments/${commentId}/delete`, {

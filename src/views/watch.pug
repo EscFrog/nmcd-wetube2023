@@ -42,13 +42,21 @@ block content
         button Add Comment
   div.video__comments
     ul
-      each comment in video.comments.reverse() 
-        li.video__comment(data-id=comment._id)
-          i.fas.fa-comment
-          div.video__comment__text
-            span  #{comment.text} 
-          if String(comment.owner._id) === String(loggedInUser._id)
-            i.fa-solid.fa-trash-can
+      if commentObjs
+        each comment in commentObjs.reverse() 
+          li.video__comment(data-id=comment._id)
+            div.video__comment__info
+              i.fas.fa-comment
+              div.comment__owner
+                if String(comment.owner._id) === String(loggedInUser._id)
+                  span You
+                else
+                  span #{comment.owner.username}
+              if String(comment.owner._id) === String(loggedInUser._id)
+                i.fa-solid.fa-trash-can
+            div.video__comment__text #{comment.text} 
+        else 
+          li nothing
 
 block scripts 
   script(src="/static/js/videoPlayer.js")

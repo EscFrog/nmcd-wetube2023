@@ -80,11 +80,26 @@
     color: black;
     margin-bottom: 10px;
     display: flex;
-    justify-content: space-between;
-    align-items: start;
-    .video__comment__text{
-      width: 100%;
-      margin: 0 10px;
+    flex-direction: column;
+    .video__comment__info {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: 6px;
+      .comment__owner {
+        width: 100%;
+        margin: 0 6px;
+        span {
+          background-color: lightgreen;
+          padding: 0 10px;
+          border-radius: 10px;
+          font-weight: bold;
+        }
+      }
+    }
+    .video__comment__text {
+    padding: 0px 22px;
+    overflow-wrap: break-word;
     }
   }
 }

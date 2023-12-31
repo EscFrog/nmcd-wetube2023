@@ -12,11 +12,20 @@ export const home = async (req, res) => {
 
 export const watch = async (req, res) => {
   const { id } = req.params;
-  const video = await Video.findById(id).populate("owner").populate("comments");
+  // const video = await Video.findById(id).populate("owner").populate("comments");
+  const video = await Video.findById(id).populate("owner");
   if (!video) {
     return res.render("404", { pageTitle: "Video not found." });
   }
-  return res.render("watch", { pageTitle: video.title, video });
+
+  const commentPromises = video.comments.map(async (comment) => {
+    return await Comment.findById(comment).populate("owner");
+  });
+
+  const commentObjs = await Promise.all(commentPromises);
+  console.log(commentObjs);
+
+  return res.render("watch", { pageTitle: video.title, video, commentObjs });
 };
 
 export const getEdit = async (req, res) => {
