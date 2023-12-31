@@ -16,10 +16,10 @@ header
           a(href="/users/logout") Log Out
         li 
           a(href=`/users/${loggedInUser._id}`)
-            if loggedInUser.avatarUrl === "" || null
-              span 🙂
-            else
+            if loggedInUser.avatarUrl
               img.header__avatar(src=loggedInUser.avatarUrl crossorigin="anonymous")
+            else
+              span 🙂 See Profile
       else
         li 
           a(href="/login") Login 
