@@ -1,6 +1,6 @@
 const videoContainer = document.getElementById("videoContainer");
 const form = document.getElementById("commentForm");
-const deleteBtns = document.querySelectorAll(".video__comment .deleteComment");
+const delIcon = document.querySelectorAll(".video__comment i");
 
 const addComment = (text, id) => {
   const videoComments = document.querySelector(".video__comments ul");
@@ -11,13 +11,13 @@ const addComment = (text, id) => {
   icon.className = "fas fa-comment";
   const span = document.createElement("span");
   span.innerText = ` ${text} `;
-  const deleteBtn = document.createElement("span");
-  deleteBtn.innerText = "❌";
+  const delIcon = document.createElement("i");
+  delIcon.className = "fa-solid fa-trash-can";
   newComment.appendChild(icon);
   newComment.appendChild(span);
-  newComment.appendChild(deleteBtn);
+  newComment.appendChild(delIcon);
   videoComments.prepend(newComment);
-  deleteBtn.addEventListener("click", handleDeleteComment);
+  delIcon.addEventListener("click", handleDeleteComment);
 };
 
 const handleSubmit = async (event) => {
@@ -47,8 +47,6 @@ const handleDeleteComment = async (event) => {
   const comment = event.target.parentNode;
   const commentId = comment.dataset.id;
 
-  // 지우려는 사람이 댓글 작성자인지 확인하는 부분 구현해야 함.
-
   const response = await fetch(`/api/comments/${commentId}/delete`, {
     method: "DELETE",
   });
@@ -62,8 +60,8 @@ if (form) {
   form.addEventListener("submit", handleSubmit);
 }
 
-if (deleteBtns) {
-  deleteBtns.forEach((deleteBtn) => {
+if (delIcon) {
+  delIcon.forEach((deleteBtn) => {
     deleteBtn.addEventListener("click", handleDeleteComment);
   });
 }
