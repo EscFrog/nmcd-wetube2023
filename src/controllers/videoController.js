@@ -94,14 +94,23 @@ export const deleteVideo = async (req, res) => {
   const {
     user: { _id },
   } = req.session; // 현재 접속한 세션의 유저 id
-  const video = await Video.findById(id);
+
+  const video = await Video.findById(id).populate("owner");
+
   if (!video) {
     return res.status(404).render("404", { pageTitle: "Video not found." });
   }
-  if (String(video.owner) !== String(_id)) {
+
+  if (String(video.owner._id) !== String(_id)) {
+    req.flash("error", "You are not the owner of the video.");
     return res.status(403).redirect("/");
   }
+
+  video.owner.videos.splice(video.owner.videos.indexOf(id), 1);
+  await video.owner.save();
+
   await Video.findByIdAndDelete(id);
+  req.flash("success", "The video has deleted");
   return res.redirect("/");
 };
 
