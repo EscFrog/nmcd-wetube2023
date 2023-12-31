@@ -16,40 +16,49 @@ const textarea = document.querySelector("#commentForm textarea");
 
 let controlsTimeout = null;
 let controlsMovementTimeout = null;
-let volumeValue = 0.5;
-video.volume = volumeValue;
 
-const handlePlayClick = (e) => {
+const initVolume = volumeRange.value;
+let volumeRecorder = initVolume;
+video.volume = volumeRecorder;
+
+const handlePlayClick = () => {
   if (video.paused) {
     video.play();
+    playBtnIcon.className = "fas fa-pause";
   } else {
     video.pause();
+    playBtnIcon.className = "fas fa-play";
   }
-  playBtnIcon.classList = video.paused ? "fas fa-play" : "fas fa-pause";
 };
 
-const handleMute = (e) => {
-  if (video.muted) {
-    video.muted = false;
-  } else {
-    video.muted = true;
-  }
-  muteBtnIcon.classList = video.muted
+const volumeBtnChanger = () => {
+  muteBtnIcon.className = video.muted
     ? "fas fa-volume-mute"
     : "fas fa-volume-up";
-  volumeRange.value = video.muted ? 0 : volumeValue;
+};
+
+const handleMute = () => {
+  if (video.muted) {
+    video.muted = false;
+    if (volumeRecorder <= 0) {
+      volumeRecorder = initVolume;
+    }
+    volumeRange.value = video.volume = volumeRecorder;
+  } else {
+    video.muted = true;
+    volumeRange.value = 0;
+  }
+  volumeBtnChanger();
 };
 
 const handleVolumeChange = (event) => {
   const {
     target: { value },
   } = event;
-  if (video.muted) {
-    video.muted = false;
-    muteBtn.innerText = "Mute";
-  }
-  volumeValue = value;
-  video.volume = volumeValue;
+
+  volumeRecorder = video.volume = value;
+  video.muted = volumeRecorder <= 0 ? true : false;
+  volumeBtnChanger();
 };
 
 const formatTime = (seconds) =>
