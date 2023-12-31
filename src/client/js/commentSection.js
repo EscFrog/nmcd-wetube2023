@@ -9,12 +9,15 @@ const addComment = (text, id) => {
   newComment.dataset.id = id;
   const icon = document.createElement("i");
   icon.className = "fas fa-comment";
+  const commentText = document.createElement("div");
+  commentText.className = "video__comment__text";
   const span = document.createElement("span");
   span.innerText = ` ${text} `;
+  commentText.appendChild(span);
   const delIcon = document.createElement("i");
   delIcon.className = "fa-solid fa-trash-can";
   newComment.appendChild(icon);
-  newComment.appendChild(span);
+  newComment.appendChild(commentText);
   newComment.appendChild(delIcon);
   videoComments.prepend(newComment);
   delIcon.addEventListener("click", handleDeleteComment);

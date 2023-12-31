@@ -76,12 +76,13 @@ export const postUpload = async (req, res) => {
       owner: _id,
       hashtags: Video.formatHashtags(hashtags),
     });
-    const user = await User.findById(_id); // 세션의 유저가 아니라 DB에서 유저를 찾는다.
+    const user = await User.findById(_id); // DB에서 세션의 유저를 찾는다.
     user.videos.push(newVideo._id);
     user.save();
+    req.flash("success", "Video upload success.");
     return res.redirect("/");
   } catch (error) {
-    console.log(error);
+    req.flash("error", `${error._massage}`);
     return res.status(400).render("upload", {
       pageTitle: "Upload Video",
       errorMessage: error._message,

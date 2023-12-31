@@ -1,35 +1,90 @@
 .video__data {
   margin-top: 20px;
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  .video__title {
-    font-size: 26px;
-    margin-bottom: 5px;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  .video__data__info{
+    display: flex;
+    flex-direction: column;
+    .video__title {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+    .video__createdAt {
+      font-size: 12px;
+    }
+    .video__owner {
+      margin-bottom: 5px;
+      font-size: 14px;
+      a {
+        color: cornflowerblue;
+        text-decoration: underline;
+      }
+    }
   }
-  .video__createdAt {
-    font-size: 12px;
-  }
-  .video__owner {
-    margin-bottom: 5px;
-    font-size: 14px;
-    a {
-      color: cornflowerblue;
-      text-decoration: underline;
+  .video__data__modify{
+    display:flex;
+    flex-direction: column;
+    align-items: end;
+    font-size: 16px;
+    div{
+      color: #000000;
+      background-color: lightgray;
+      padding: 6px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+      i{
+        margin-left:10px;
+      }
     }
   }
 }
+
+.video__add-comments {
+  display: flex;
+  justify-content: center;
+  #commentForm {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 800px;
+    textarea {
+      resize: none;
+      height: 100px;
+      margin-bottom: 4px;
+      padding: 10px;
+      background-color: lightgray;
+    }
+    button {
+      padding: 4px;
+      font-size: 16px;
+      background-color: lightgreen;
+      border: none;
+      border-radius: 10px;
+    }
+  }
+}
+
 .video__comments {
   display: flex;
   flex-direction: column;
-  max-width: 320px;
+  max-width: 800px;
   width: 100%;
   margin: 0 auto;
   margin-top: 20px;
   .video__comment {
     padding: 10px;
-    border-radius: 9999px;
+    border-radius: 10px;
     background-color: white;
     color: black;
     margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    .video__comment__text{
+      width: 100%;
+      margin: 0 10px;
+    }
   }
 }
